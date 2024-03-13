@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 from docx import Document
 from datetime import datetime
 import os
 
 app = Flask(__name__)
+
+# Configura o caminho para os templates
+#template_path       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app', 'templates')
+#app.template_folder = template_path
 
 @app.route('/')
 def index():
@@ -11,46 +15,54 @@ def index():
 
 @app.route('/processar_formulario', methods=['POST'])
 def processar_formulario():
-    nome = request.form['nome']
-    equipamento = request.form['equipamento']
-    inicio = request.form['inicio']
-    final = request.form['final']
-    estoque_utilizado = request.form['estoqueUtilizado']
-    removido_voltou = request.form['removidoVoltou']
-    motivo_remocao = request.form.get('motivoRemocao', '')
 
-    # Create a Word document and write the data
-    document = Document('./template.docx')
+    try:
 
-    document.add_paragraph(f'Nome: {nome}')
-    document.add_paragraph(f'Equipamento: {equipamento}')
-    document.add_paragraph(f'Período: {inicio} - {final}')
-    document.add_paragraph(f'Estoque Utilizado: {estoque_utilizado}')
+        nome = request.form['nome']
+        equipamento = request.form['equipamento']
+        inicio = request.form['inicio']
+        final = request.form['final']
+        estoque_utilizado = request.form['estoqueUtilizado']
+        removido_voltou = request.form['removidoVoltou']
+        motivo_remocao = request.form.get('motivoRemocao', '')
 
-    document.add_paragraph('Algo foi removido e voltou ao estoque? ' + ('Sim' if removido_voltou == 'sim' else 'Não'))
+        # Create a Word document and write the data
+        document = Document('./template.docx')
 
-    if removido_voltou == 'sim':
-        document.add_paragraph(f'Motivo da Remoção: {motivo_remocao}')
+        document.add_paragraph(f'Nome: {nome}')
+        document.add_paragraph(f'Equipamento: {equipamento}')
+        document.add_paragraph(f'Período: {inicio} - {final}')
+        document.add_paragraph(f'Estoque Utilizado: {estoque_utilizado}')
 
-    # Get current date
-    data_atual = datetime.now()
+        document.add_paragraph('Algo foi removido e voltou ao estoque? ' + ('Sim' if removido_voltou == 'sim' else 'Não'))
 
-    # Format the date as a string
-    formato_data = "%d-%m-%Y"
-    data_formatada = data_atual.strftime(formato_data)
+        if removido_voltou == 'sim':
+            document.add_paragraph(f'Motivo da Remoção: {motivo_remocao}')
 
-    caminho = './relatorios/'
+        # Get current date
+        data_atual = datetime.now()
 
-    # Check that the directory does not exist before creating
-    if not os.path.exists(caminho):
-        os.makedirs(caminho)
-        print(f'The folder at {caminho} was created successfully.')
+        # Format the date as a string
+        formato_data = "%d-%m-%Y"
+        data_formatada = data_atual.strftime(formato_data)
 
-    documento = "{}{}.docx".format(caminho, data_formatada)
+        caminho = './relatorios/'
 
-    document.save(documento)
+        # Check that the directory does not exist before creating
+        if not os.path.exists(caminho):
+            os.makedirs(caminho)
+            print(f'The folder at {caminho} was created successfully.')
 
-    return send_file(documento, as_attachment=True)
+        documento = "{}{}.docx".format(caminho, data_formatada)
+
+        document.save(documento)
+
+        #send_file(documento, as_attachment=True)
+        return jsonify(success=True)
+    
+    except Exception as e:
+        print(f'Erro: {str(e)}')
+        return jsonify(success=False)
 
 if __name__ == '__main__':
     app.run(debug=True)
