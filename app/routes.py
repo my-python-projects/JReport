@@ -7,6 +7,7 @@ import os
 
 @app.route('/')
 def index():
+    app.logger.info('Acesso à página inicial')
     return render_template('index.html')
 
 @app.route('/login')
