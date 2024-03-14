@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, send_file, jsonify
+from app import app
+from flask import render_template, request, send_file, jsonify
 from docx import Document
 from datetime import datetime
 import os
 
-app = Flask(__name__)
-
-# Configura o caminho para os templates
-#template_path       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app', 'templates')
-#app.template_folder = template_path
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 
 @app.route('/processar_formulario', methods=['POST'])
 def processar_formulario():
@@ -64,5 +65,3 @@ def processar_formulario():
         print(f'Erro: {str(e)}')
         return jsonify(success=False)
 
-if __name__ == '__main__':
-    app.run(debug=True)
