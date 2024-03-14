@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
     <title>Formulário de Estoque</title>
 </head>
 <body>
 
-<div class="container mt-5">
+<div class="container mt-5 form-container">
     <form method="post" action="/processar_formulario">
         <div class="form-group">
             <label for="nome">Nome:</label>

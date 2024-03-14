@@ -7,6 +7,18 @@ $('input[type=radio][name=removidoVoltou]').change(function () {
 });
 
 
+// Função para limpar os campos do formulário
+function limparCampos() {
+    $('#nome').val('');
+    $('#data').val('');
+    $('#equipamento').val('');
+    $("#inicio").val(''),
+    $("#final").val(''),
+    $("#estoqueUtilizado").val(''),
+    $("[name=removidoVoltou]").val(''),
+    $("[name=motivoRemocao]").val('');
+}
+
 $(document).ready(function () {
     $("#botaoEnviar").on("click", function () {
         // Adicionar animação de carregamento ao botão
@@ -41,6 +53,8 @@ $(document).ready(function () {
 
                 // Exibir modal de sucesso
                 $("#modalSucesso").modal('show');
+
+                limparCampos();
 
                 // Ocultar modal de sucesso após 3 segundos
                 setTimeout(function () {
