@@ -8,10 +8,15 @@ import os
 @app.route('/')
 def index():
     app.logger.info('Acesso à página inicial')
-    return render_template('index.html')
+
+    # Teste se já está logado
+    isLogin = True
+    # teste com condição if ternario
+    return render_template('index.html' if isLogin else 'login.html')
 
 @app.route('/login')
 def login():
+    app.logger.info('Acesso à página Login')
     return render_template('login.html')
 
 
