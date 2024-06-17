@@ -1,3 +1,4 @@
 /relatorios
 app/__pycache__
 app/logs
+*.docx

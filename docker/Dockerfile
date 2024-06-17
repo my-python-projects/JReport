@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     npm \
     && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt requirements.txt
+
 RUN pip install -r requirements.txt
 
 # Instalar as dependências do npm (incluindo o Vue.js)
