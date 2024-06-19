@@ -20,6 +20,11 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/register')
+def register():
+    app.logger.info('Acesso à página de Cadastro')
+    return render_template('register.html')
+
 @app.route('/processar_formulario', methods=['POST'])
 def processar_formulario():
 
