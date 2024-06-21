@@ -4,3 +4,4 @@ app/logs
 *.docx
 /backend/venv/*
 /frontend/node_modules/*
+/old/app/__pycache__/*
