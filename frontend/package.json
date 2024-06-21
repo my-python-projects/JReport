@@ -1,0 +1,22 @@
+{
+    "name": "frontend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build"
+    },
+    "dependencies": {
+        "vue": "^3.0.0",
+        "vue-router": "^4.4.0"
+    },
+    "devDependencies": {
+        "@vue/cli-service": "^4.5.0"
+    },
+    "babel": {
+        "presets": [
+            "@vue/cli-plugin-babel/preset"
+        ]
+    }
+}

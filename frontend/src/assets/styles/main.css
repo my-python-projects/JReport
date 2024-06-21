@@ -1,0 +1,62 @@
+body {
+    /*background: linear-gradient(135deg, #8e44ad, #3498db);*/
+    background: linear-gradient(135deg, #3498db, #9b59b6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.login-container, .register-container {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.rounded-input {
+    border-radius: 25px;
+}
+
+.password-toggle {
+    cursor: pointer;
+}
+
+.remember-forgot {
+    color: #8e44ad;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.forgot-password{
+    color: #8e44ad;
+}
+
+.btn-login {
+    border-radius: 50px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #8e44ad;
+}
+
+.create-account-btn {
+    background-color: #fff;
+    color: #9b59b6;
+    border: 2px solid #9b59b6;
+}
+
+.create-account-btn:hover{
+    background-color: #9b59b6;
+    color: #fff;
+}
