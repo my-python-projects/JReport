@@ -1,4 +1,6 @@
 /relatorios
-app/__pycache__
+backend/__pycache__
 app/logs
 *.docx
+/backend/venv/*
+/frontend/node_modules/*
