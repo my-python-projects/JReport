@@ -1,0 +1,59 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 108-647-105
+INFO:app:Acesso à página inicial
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:18] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:20] "GET /static/js/script.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:22] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:31] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:31] "GET /static/js/main.js HTTP/1.1" 200 -
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:55] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:03:55] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:07:07] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:07:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:09:14] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:09:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 108-647-105
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 108-647-105
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:11:22] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:11:24] "GET /static/js/main.js HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 108-647-105
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:12:17] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Jun/2024 20:12:17] "GET /static/js/main.js HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 108-647-105
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2024 14:03:54] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2024 14:03:57] "GET /static/img/avatar.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2024 14:04:02] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:app:Acesso à página de Cadastro
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2024 14:05:27] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2024 14:05:27] "[36mGET /static/img/avatar.png HTTP/1.1[0m" 304 -
