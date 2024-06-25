@@ -4,15 +4,15 @@ import Register from './views/Register.vue';
 import Report from './views/Report.vue';
 
 const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: Login, meta: { title: 'Login' } },
+  { path: '/'        , redirect: '/login' },
+  { path: '/login'   , component: Login   , meta: { title: 'Login'    } },
   { path: '/register', component: Register, meta: { title: 'Register' } },
-  { path: '/report', component: Report, meta: { title: 'Report' } },
+  { path: '/report'  , component: Report  , meta: { title: 'Report'   } }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 });
 
 // Atualizar o título da página com base na meta da rota

@@ -31,13 +31,15 @@
             <hr style="margin-top: 20px; margin-bottom: 20px; border-color: #9b59b6;">
 
             <p class="mb-3" style="color: #9b59b6;">Ainda não tem uma conta?</p>
-            <button type="button" class="btn create-account-btn">Criar Conta</button>
+            <button type="button" class="btn create-account-btn" @click="redirectToSignup">Criar Conta</button>
 
     </form>
   </div>
 </template>
 
 <script>
+import { loginUser } from '../utils/api';
+
 export default {
   data() {
     return {
@@ -48,22 +50,17 @@ export default {
   },
   methods: {
     async login() {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: this.email,
-          password: this.password
-        })
-      })
-      const data = await response.json()
-      if (response.ok) {
-        alert(data.message)
-      } else {
-        this.error = data.error
+      try {
+        const response = await loginUser({ email: this.email, password: this.password });
+        alert('Login successful:', response);
+        // Redirecionar ou fazer algo após login bem-sucedido
+      } catch (err) {
+        console.log('Login failed');
       }
+    },
+
+    redirectToSignup() {
+      this.$router.push('/register');
     }
   }
 }

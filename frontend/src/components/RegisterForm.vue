@@ -20,12 +20,14 @@
             <hr style="margin-top: 20px; margin-bottom: 20px; border-color: #9b59b6;">
 
             <p class="mb-3" style="color: #9b59b6;">Já possui uma conta?</p>
-            <button type="button" class="btn create-account-btn">Fazer Login</button>
+            <button type="button" class="btn create-account-btn" @click="redirectToLogin">Fazer Login</button>
   </form>
 </div>
 </template>
 
 <script>
+import { registerUser } from '../utils/api';
+
 export default {
   data() {
     return {
@@ -37,23 +39,17 @@ export default {
   },
   methods: {
     async register() {
-      const response = await fetch('http://localhost:5000/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.username,
-          email: this.email,
-          password: this.password
-        })
-      })
-      const data = await response.json()
-      if (response.ok) {
-        alert(data.message)
-      } else {
-        this.error = data.error
+      try {
+        const response = await registerUser({ email: this.email, password: this.password });
+        alert('Registration successful:', response);
+        // Redirecionar ou fazer algo após registro bem-sucedido
+      } catch (err) {
+        console.log('Registration failed');
       }
+    },
+
+    redirectToLogin() {
+      this.$router.push('/login');
     }
   }
 }
