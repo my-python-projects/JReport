@@ -21,3 +21,13 @@ export async function loginUser(userData) {
     throw error;
   }
 }
+
+export async function submitReport(reportData) {
+  try {
+    const response = await axios.post(`${API_URL}/report`, reportData);
+    return response.data;
+  } catch (error) {
+    console.error('Error submitting report:', error);
+    throw error;
+  }
+}
