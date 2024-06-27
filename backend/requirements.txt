@@ -4,3 +4,5 @@ Flask-Cors==4.0.1
 pymongo==4.7.3
 dnspython==2.6.1
 python-dotenv==1.0.1
+Flask-PyMongo==2.3.0
+Werkzeug==3.0.3

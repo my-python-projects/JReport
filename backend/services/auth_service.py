@@ -1,19 +1,17 @@
-from models.user import User
+from werkzeug.security import generate_password_hash, check_password_hash
 
-def register_user(db, email, password):
-    if db.users.find_one({'email': email}):
-        return None
-    user = User(email, password)
-    db.users.insert_one({
-        'email': user.email,
-        'password': user.password
-    })
-    return user
+def create_user(db, email, password):
+    hashed_password = generate_password_hash(password)
+    try:
+        db.users.insert_one({'email': email, 'password': hashed_password})
+        return True
+    except Exception as e:
+        print(f"Error creating user: {e}")
+        return False
 
 def authenticate_user(db, email, password):
-    user_data = db.users.find_one({'email': email})
-    if user_data:
-        user = User(user_data['email'], user_data['password'])
-        if user.check_password(password):
-            return user
-    return None
+    user = db.users.find_one({'email': email})
+    if user and check_password_hash(user['password'], password):
+        return True
+    else:
+        return False

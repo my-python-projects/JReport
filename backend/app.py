@@ -1,24 +1,24 @@
 from flask import Flask
 from flask_cors import CORS
-from pymongo import MongoClient
 from config import Config
+from utils.mongo import mongo, init_mongo
 
-app = Flask(__name__)
-app.config.from_object(Config)
-CORS(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-# Conexão com o MongoDB
-client = MongoClient(app.config['MONGO_URI'])
-db = client.get_database()
+    # Inicializa o MongoDB
+    init_mongo(app)
 
-# Importando e registrando as rotas
-from routes import auth_blueprint
-app.register_blueprint(auth_blueprint)
+    # Configura o CORS
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    from routes.auth_routes import auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
+    return app
+
+app = create_app()
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# Configura o caminho para os templates
-#template_path       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app', 'templates')
-#app.template_folder = template_path
