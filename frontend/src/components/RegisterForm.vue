@@ -4,15 +4,15 @@
     <h2>Cadastro</h2>
   <form @submit.prevent="register">
     <div class="mb-3">
-                <input type="text" class="form-control rounded-input" placeholder="Usuario" required>
+                <input v-model="username" type="text" class="form-control rounded-input" placeholder="Usuario" required>
             </div>
 
             <div class="mb-3">
-              <input type="text" class="form-control rounded-input" placeholder="Email" required>
+              <input v-model="email" type="text" class="form-control rounded-input" placeholder="Email" required>
             </div>
 
             <div class="mb-3">
-              <input type="password" class="form-control rounded-input" placeholder="Digite sua senha" required>
+              <input v-model="password" type="password" class="form-control rounded-input" placeholder="Digite sua senha" required>
             </div>
 
             <button type="submit" class="btn btn-primary btn-login" id="btnLogin">Cadastrar</button>
@@ -40,7 +40,7 @@ export default {
   methods: {
     async register() {
       try {
-        const response = await registerUser({ email: this.email, password: this.password });
+        const response = await registerUser({ username: this.username, email: this.email, password: this.password });
         alert('Registration successful:', response);
         // Redirecionar ou fazer algo após registro bem-sucedido
       } catch (err) {

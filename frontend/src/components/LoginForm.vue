@@ -4,12 +4,12 @@
     <h2>Login</h2>
     <form @submit.prevent="login">
       <div class="mb-3">
-                <input type="text" class="form-control rounded-input" placeholder="Digite seu usuario ou email" required>
+                <input v-model="email" type="text" class="form-control rounded-input" placeholder="Digite seu usuario ou email" required>
             </div>
             
             <div class="mb-3">
                 <div class="input-group">
-                    <input type="password" class="form-control rounded-input" placeholder="Digite sua senha" required>
+                    <input v-model="password" type="password" class="form-control rounded-input" placeholder="Digite sua senha" required>
                     <span class="input-group-text password-toggle" onclick="togglePassword()">
                         <i class="far fa-eye"></i>
                     </span>
