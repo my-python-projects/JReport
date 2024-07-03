@@ -1,6 +1,15 @@
 body {
     /*background: linear-gradient(135deg, #8e44ad, #3498db);*/
     background: linear-gradient(135deg, #3498db, #9b59b6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-body,
+.register-form-body {
+    /*background: linear-gradient(135deg, #8e44ad, #3498db);*/
+    background: linear-gradient(135deg, #3498db, #9b59b6);
     height: 100vh;
     display: flex;
     justify-content: center;

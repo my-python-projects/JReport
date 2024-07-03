@@ -34,6 +34,7 @@
             <button type="button" class="btn create-account-btn" @click="redirectToSignup">Criar Conta</button>
 
     </form>
+    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
@@ -52,8 +53,9 @@ export default {
     async login() {
       try {
         const response = await loginUser({ email: this.email, password: this.password });
-        alert('Login successful:', response);
-        // Redirecionar ou fazer algo após login bem-sucedido
+        console.log('Login successful:', response);
+
+        response.success ? this.$router.push('/report') : this.error = response.message;
       } catch (err) {
         console.log('Login failed');
       }
