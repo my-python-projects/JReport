@@ -1,13 +1,27 @@
 # Classe Base de Migração com Operações Comuns
 
 from pymongo import MongoClient
-from app import create_app
+from config import Config
 
 class BaseMigration:
     def __init__(self):
-        self.app = create_app()
-        self.client = MongoClient(self.app.config['MONGO_URI'])
-        self.db = self.client[self.app.config['MONGO_DBNAME']]
+        self.client = MongoClient(Config.MONGO_URI)
+        self.db = self.client.get_default_database()
+
+    def create_database(self):
+        print(Config.MONGO_URI)
+        print(self.client.get_default_database())
+        """Cria o banco de dados se não existir."""
+        if self.db_name not in self.client.list_database_names():
+            self.db.command("ping")
+            print(f"Banco de dados '{self.db_name}' criado com sucesso.")
+        else:
+            print(f"Banco de dados '{self.db_name}' já existe.")
+
+    def drop_database(self):
+        """Remove o banco de dados."""
+        self.client.drop_database(self.db_name)
+        print(f"Banco de dados '{self.db_name}' removido com sucesso.")
 
     def create_collection(self, name):
         self.db.create_collection(name)
