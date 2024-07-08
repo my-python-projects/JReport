@@ -3,7 +3,7 @@ from migrations.base_migration import BaseMigration
 class InitialSetup(BaseMigration):
     def __init__(self):
         super().__init__()
-        self.db_name = 'jreport'  # Substitua pelo nome do seu banco de dados MongoDB
+        self.db_name = 'jreport'
 
     def run(self):
         self.create_database()

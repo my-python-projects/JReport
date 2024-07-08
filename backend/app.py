@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 from config import Config
-from utils.mongo import mongo, init_mongo
+from utils.mongo import init_mongo
+from flask_jwt_extended import JWTManager
 
 def create_app():
     app = Flask(__name__)
@@ -9,6 +10,9 @@ def create_app():
 
     # Inicializa o MongoDB
     init_mongo(app)
+
+    # Inicializa o JWT
+    jwt = JWTManager(app)
 
     # Configura o CORS
     CORS(app, resources={r"/api/*": {"origins": "*"}})
