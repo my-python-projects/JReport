@@ -26,7 +26,8 @@ def register_user():
         
     except Exception as e:
         print(f"Error in register_user: {e}")
-        return jsonify({'success': False, 'message': 'Internal server error'}), 500
+        return jsonify({ 'success': False, 'message': 'Internal server error' }), 500
+
 
 def login_user():
     try:
@@ -37,37 +38,19 @@ def login_user():
 
         print(f"Logging in user with email: {email}")
 
-        user = authenticate_user(db, email, password)
+        response, error = authenticate_user(db, email, password, token_2fa)
 
-        if user:
-            print(f"User authenticated: {user}")
-            if verify_2fa_token(user['2fa_secret'], token_2fa):
-                access_token, refresh_token = generate_tokens(user)
-                return jsonify({
-                    'success': True,
-                    'access_token': access_token,
-                    'refresh_token': refresh_token,
-                    'message': 'Login successful'
-                }), 200
+        if error:
+            if error == '2FA required':
+                return jsonify({ 'success': False, 'message': '2FA required' }), 401
             else:
-                print("Invalid 2FA token")
+                return jsonify({ 'success': False, 'message': error }), 401
         else:
-            print("Invalid email or password")
-
-        return jsonify({'success': False, 'message': 'Invalid credentials or 2FA token'}), 401
-
-        '''if user and verify_2fa_token(user['2fa_secret'], token_2fa):
-            access_token, refresh_token = generate_tokens(user)
-            return jsonify({'success': True, 
-                            'access_token': access_token, 
-                            'refresh_token': refresh_token, 
-                            'message': 'Login successful'}), 200
-        else:
-            return jsonify({'success': False, 'message': 'Invalid credentials or 2FA token'}), 401'''
+            return jsonify(response), 200
         
     except Exception as e:
         print(f"Error in login_user: {e}")
-        return jsonify({'success': False, 'message': 'Internal server error'}), 500
+        return jsonify({ 'success': False, 'message': 'Internal server error' }), 500
 
 @jwt_required()
 def protected():

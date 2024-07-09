@@ -1,23 +1,11 @@
 body {
-    /*background: linear-gradient(135deg, #8e44ad, #3498db);*/
     background: linear-gradient(135deg, #3498db, #9b59b6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.login-form-body,
-.register-form-body {
-    /*background: linear-gradient(135deg, #8e44ad, #3498db);*/
-    background: linear-gradient(135deg, #3498db, #9b59b6);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #9b59b6;
 }
 
-.login-container, .register-container {
+.container {
     background-color: #ffffff;
     border-radius: 20px;
     padding: 40px;
@@ -35,6 +23,7 @@ body {
 
 .rounded-input {
     border-radius: 25px;
+    margin-bottom: 15px;
 }
 
 .password-toggle {
@@ -48,24 +37,47 @@ body {
     margin-top: 10px;
 }
 
-.forgot-password{
+.forgot-password {
     color: #8e44ad;
 }
 
-.btn-login {
+.btn-primary {
     border-radius: 50px;
     width: 100%;
     margin-top: 20px;
     background-color: #8e44ad;
+    border: none;
 }
 
 .create-account-btn {
     background-color: #fff;
     color: #9b59b6;
     border: 2px solid #9b59b6;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 50px;
 }
 
-.create-account-btn:hover{
+.create-account-btn:hover {
     background-color: #9b59b6;
     color: #fff;
+}
+
+.qr-code-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-code-container img {
+    width: 200px;
+    height: 200px;
+    margin-top: 20px;
+}
+
+.qr-code-instructions {
+    color: #9b59b6;
+    font-size: 16px;
+    margin-bottom: 10px;
 }

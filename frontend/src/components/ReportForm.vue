@@ -126,13 +126,55 @@ export default {
 <style scoped>
 .report-form-container {
   background-color: #ffffff;
-  border-radius: 40px;
-  padding: 100px;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Ajusta a largura para ocupar 90% do viewport */
-  max-width: 1000px; /* Define uma largura máxima */
-  margin: 70px auto; /* Centraliza o contêiner e ajusta a margem superior */
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  margin: 50px auto;
+  color: #4a4a4a;
 }
 
+.form-group {
+  margin-bottom: 20px;
+}
 
+.form-group label {
+  font-weight: bold;
+  color: #3498db;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-control {
+  border-radius: 25px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.form-check-input {
+  margin-right: 10px;
+}
+
+.form-check-label {
+  font-size: 16px;
+}
+
+.btn-primary {
+  background-color: #8e44ad;
+  border: none;
+  padding: 10px;
+  border-radius: 25px;
+  font-size: 18px;
+  width: 100%;
+}
+
+.modal-content {
+  border-radius: 20px;
+}
+
+.modal-header, .modal-body {
+  text-align: center;
+}
 </style>
