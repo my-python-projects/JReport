@@ -16,7 +16,7 @@ cd /d "%diretorioVerificar%"
 :: 
 call venv\Scripts\activate
 
-pip install --no-deps -r requirements.txt
+pip install -r requirements.txt
 
 python app.py
 

@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from services.auth_service import create_user, authenticate_user, generate_tokens, verify_2fa_token
+from services.auth_service import create_user, authenticate_user, generate_tokens, verify_2fa_token, generate_qr_code
 from utils.mongo import mongo
 
 def register_user():
@@ -12,12 +12,17 @@ def register_user():
 
         print(f"Registering user {username} with email: {email}")
 
-        result = create_user(db, username, email, password)
+        sucess, secret = create_user(db, username, email, password)
 
-        if result:
-            return jsonify({'success': True, 'message': 'User registered successfully'}), 200
+        if sucess:
+            # Gerar o QR Code
+            qr_code         = generate_qr_code(secret, email)
+            return jsonify({ 
+                'success': True, 
+                'message': 'User registered successfully', 
+                'qr_code': f'data:image/png;base64,{qr_code}'}), 200
         else:
-            return jsonify({'success': False, 'message': 'Registration failed'}), 400
+            return jsonify({ 'success': False, 'message': 'Registration failed'}), 400
         
     except Exception as e:
         print(f"Error in register_user: {e}")
@@ -34,14 +39,31 @@ def login_user():
 
         user = authenticate_user(db, email, password)
 
-        if user and verify_2fa_token(user['2fa_secret'], token_2fa):
+        if user:
+            print(f"User authenticated: {user}")
+            if verify_2fa_token(user['2fa_secret'], token_2fa):
+                access_token, refresh_token = generate_tokens(user)
+                return jsonify({
+                    'success': True,
+                    'access_token': access_token,
+                    'refresh_token': refresh_token,
+                    'message': 'Login successful'
+                }), 200
+            else:
+                print("Invalid 2FA token")
+        else:
+            print("Invalid email or password")
+
+        return jsonify({'success': False, 'message': 'Invalid credentials or 2FA token'}), 401
+
+        '''if user and verify_2fa_token(user['2fa_secret'], token_2fa):
             access_token, refresh_token = generate_tokens(user)
             return jsonify({'success': True, 
                             'access_token': access_token, 
                             'refresh_token': refresh_token, 
                             'message': 'Login successful'}), 200
         else:
-            return jsonify({'success': False, 'message': 'Invalid credentials or 2FA token'}), 401
+            return jsonify({'success': False, 'message': 'Invalid credentials or 2FA token'}), 401'''
         
     except Exception as e:
         print(f"Error in login_user: {e}")
