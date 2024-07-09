@@ -8,10 +8,12 @@
           <input v-model="username" type="text" class="form-control rounded-input" placeholder="Usuário" required>
         </div>
         <div class="mb-3">
-          <input v-model="email" type="text" class="form-control rounded-input" placeholder="Email" required>
+          <input v-model="email" type="text" class="form-control rounded-input" placeholder="Email" @blur="validateEmailField" required>
+          <span v-if="emailError" class="text-danger">{{ emailError }}</span>
         </div>
         <div class="mb-3">
-          <input v-model="password" type="password" class="form-control rounded-input" placeholder="Digite sua senha" required>
+          <input v-model="password" type="password" class="form-control rounded-input" placeholder="Digite sua senha" @blur="validatePasswordField" required>
+          <span v-if="passwordError" class="text-danger">{{ passwordError }}</span>
         </div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
         <hr style="margin: 20px 0; border-color: #9b59b6;">
@@ -30,6 +32,7 @@
 
 <script>
 import { registerUser } from '../utils/api';
+import { validateEmail, validatePassword } from '@/utils/validation';
 
 export default {
   data() {
@@ -38,18 +41,26 @@ export default {
       email: '',
       password: '',
       error: '',
-      qr_code: ''
+      qr_code: '',
+      emailError: '',
+      passwordError: ''
     }
   },
   methods: {
     async register() {
       try {
-        const response = await registerUser({ username: this.username, email: this.email, password: this.password });
-        if (response.success) {
-          this.qr_code = response.qr_code;  // Recebemos a string completa data:image/png;base64,
-        } else {
-          this.error = response.message;
+        if(!this.emailError && !this.passwordError){
+          const response = await registerUser({ username: this.username, email: this.email, password: this.password });
+         
+          if (response.success) {
+            this.qr_code = response.qr_code;  // Recebemos a string completa data:image/png;base64,
+          } else {
+            this.error = response.message;
+          }
+        }else{
+          this.error = '[ERRO] Verifique o email ou a senha informada!';
         }
+
       } catch (err) {
         console.log('Registration failed');
         this.error = 'Registration failed';
@@ -57,6 +68,16 @@ export default {
     },
     redirectToLogin() {
       this.$router.push('/login');
+    },
+    validateEmailField() {
+      this.emailError = !validateEmail(this.email) ? 'Email inválido.' : '';
+    },
+    validatePasswordField() {
+      if (!validatePassword(this.password)) {
+        this.passwordError = 'A senha deve ter pelo menos 6 caracteres, uma letra maiúscula, um número e um símbolo especial.';
+      } else {
+        this.passwordError = '';
+      }
     }
   }
 }
@@ -69,5 +90,9 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100%;
+}
+
+.text-danger {
+  color: red;
 }
 </style>

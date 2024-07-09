@@ -5,14 +5,16 @@
       <h2>Login</h2>
       <form @submit.prevent="login">
         <div class="mb-3">
-          <input v-model="email" type="text" class="form-control rounded-input" placeholder="Digite seu usuário ou email" required>
+          <input v-model="email" type="email" class="form-control rounded-input" id="email" placeholder="Informe o seu email" @blur="validateEmailField" required>
+          <span v-if="emailError" class="text-danger">{{ emailError }}</span>
         </div>
         <div class="mb-3">
           <div class="input-group">
-            <input v-model="password" type="password" class="form-control rounded-input" placeholder="Digite sua senha" required>
+            <input ref="password" v-model="password" type="password" class="form-control rounded-input" id="password" placeholder="Digite sua senha" @blur="validatePasswordField" required>
             <span class="input-group-text password-toggle" @click="togglePassword">
               <i class="far fa-eye"></i>
             </span>
+            <span v-if="passwordError" class="text-danger">{{ passwordError }}</span>
           </div>
         </div>
         <div class="mb-3 remember-forgot">
@@ -45,6 +47,7 @@
 
 <script>
 import { loginUser } from '../utils/api';
+import { validateEmail, validatePassword } from '@/utils/validation';
 
 export default {
   data() {
@@ -53,20 +56,25 @@ export default {
       password: '',
       token_2fa: '',
       error: '',
-      step2fa: false
+      step2fa: false,
+      emailError: '',
+      passwordError: ''
     }
   },
   methods: {
     async login() {
       try {
         console.log("Sending login data:", this.email, this.password);
-        const response = await loginUser({ email: this.email, password: this.password });
-        console.log('Login step 1 successful:', response);
 
-        if (response.success) {
-          this.step2fa = true;  // Move to 2FA step
-        } else {
-          this.error = response.message;
+        if(!this.emailError && !this.passwordError){
+          const response = await loginUser({ email: this.email, password: this.password });
+          console.log('Login step 1 successful:', response);
+
+          if (response.success) {
+            this.step2fa = true;  // Move to 2FA step
+          } else {
+            this.error = response.message;
+          }
         }
       } catch (err) {
         console.log('Login failed:', err);
@@ -93,8 +101,22 @@ export default {
       this.$router.push('/register');
     },
     togglePassword() {
-      const passwordField = this.$el.querySelector('input[type="password"]');
+      const passwordField = this.$refs.password;
       passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+    },
+    validateEmailField() {
+      if (!validateEmail(this.email)) {
+        this.emailError = 'Email inválido.';
+      } else {
+        this.emailError = '';
+      }
+    },
+    validatePasswordField() {
+      if (!validatePassword(this.password)) {
+        this.passwordError = 'A senha deve ter pelo menos 6 caracteres, uma letra maiúscula, um número e um símbolo especial.';
+      } else {
+        this.passwordError = '';
+      }
     }
   }
 }
@@ -107,5 +129,9 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100%;
+}
+
+.text-danger {
+  color: red;
 }
 </style>
