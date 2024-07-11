@@ -31,3 +31,23 @@ export async function submitReport(reportData) {
     throw error;
   }
 }
+
+export const verify2fa = async (verificationData) => {
+  try {
+    const response = await axios.post(`${API_URL}/verify-2fa`, verificationData);
+    return response.data;
+  } catch (error) {
+    console.error('Error verifying 2FA:', error);
+    throw error;
+  }
+};
+
+export const check2FA = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}/check-2fa`, data);
+    return response.data;
+  } catch (error) {
+    console.error('Error checking 2FA:', error);
+    throw error;
+  }
+};

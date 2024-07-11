@@ -3,7 +3,7 @@
     <div class="container" v-if="!step2fa">
       <img src="/img/avatar.png" alt="Avatar" class="avatar">
       <h2>Login</h2>
-      <form @submit.prevent="login">
+      <form>
         <div class="mb-3">
           <input v-model="email" type="email" class="form-control rounded-input" id="email" placeholder="Informe o seu email" @blur="validateEmailField" required>
           <span v-if="emailError" class="text-danger">{{ emailError }}</span>
@@ -24,7 +24,7 @@
           </div>
           <a href="#" class="forgot-password">Esqueceu a senha?</a>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="button" class="btn btn-primary" @click="check2fa">Login</button>
         <hr style="margin: 20px 0; border-color: #9b59b6;">
         <p class="mb-3" style="color: #9b59b6;">Ainda não tem uma conta?</p>
         <button type="button" class="btn create-account-btn" @click="redirectToSignup">Criar Conta</button>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { loginUser } from '../utils/api';
+import { check2FA, loginUser } from '../utils/api';
 import { validateEmail, validatePassword } from '@/utils/validation';
 
 export default {
@@ -62,30 +62,52 @@ export default {
     }
   },
   methods: {
+    async check2fa() {
+      try {
+        //console.log("Checking 2FA status for:", this.email);
+        
+        const response = await check2FA({ email: this.email });
+        
+        if (response.success) {
+          if (response.enabled_2fa) {
+            this.step2fa = true;
+          } else {
+            this.login();
+          }
+        } else {
+          this.error = response.message;
+        }
+      } catch (err) {
+        console.error('2FA check failed:', err);
+        this.error = '2FA check failed due to network or server error';
+      }
+    },
     async login() {
       try {
-        console.log("Sending login data:", this.email, this.password);
+        //console.log("Sending login data:", this.email, this.password);
 
-        if(!this.emailError && !this.passwordError){
+        if (!this.emailError && !this.passwordError) {
           const response = await loginUser({ email: this.email, password: this.password });
-          console.log('Login step 1 successful:', response);
+          console.log('Login response:', response);
 
           if (response.success) {
-            this.step2fa = true;  // Move to 2FA step
+            this.$router.push('/report');
           } else {
             this.error = response.message;
           }
+        } else {
+          this.error = 'Please fix the errors in the form.';
         }
       } catch (err) {
-        console.log('Login failed:', err);
-        this.error = 'Login failed';
+        console.error('Login failed:', err);
+        this.error = 'Login failed due to network or server error';
       }
     },
     async verify2fa() {
       try {
-        console.log("Verifying 2FA token:", this.token_2fa);
+        //console.log("Verifying 2FA token:", this.token_2fa);
         const response = await loginUser({ email: this.email, password: this.password, token_2fa: this.token_2fa });
-        console.log('2FA verification successful:', response);
+        //console.log('2FA verification response:', response);
 
         if (response.success) {
           this.$router.push('/report');
@@ -93,8 +115,8 @@ export default {
           this.error = response.message;
         }
       } catch (err) {
-        console.log('2FA verification failed:', err);
-        this.error = '2FA verification failed';
+        console.error('2FA verification failed:', err);
+        this.error = '2FA verification failed due to network or server error';
       }
     },
     redirectToSignup() {
