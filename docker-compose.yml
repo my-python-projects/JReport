@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  jreport-backend:
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - jreport-mongo
+      - jreport-rabbitmq
+    networks:
+      - my_network
+
+  jreport-frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+  jreport-mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  jreport-rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

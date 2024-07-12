@@ -19,4 +19,4 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
 #logging.basicConfig(filename=LOG_FILE_DEBUG, level=logging.DEBUG)
 
 # Importação de rotas para registrar rotas
-from app import routes
+from backend import routes
