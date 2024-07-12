@@ -6,3 +6,4 @@ app/logs
 **/__pycache__/
 /frontend/package-lock.json
 /backend/.env
+/backend/logs/*
