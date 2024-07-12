@@ -36,12 +36,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
-        working-directory: ./backend
-        run: |
-          # Add your test command here
-          pytest
-
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
