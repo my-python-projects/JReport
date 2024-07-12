@@ -5,13 +5,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask import current_app
 from io import BytesIO
+from backend.log_config import setup_logging
+
+logger = setup_logging()
 
 def create_user(db, username, email, password):
     hashed_password = generate_password_hash(password)
     secret          = pyotp.random_base32()  # Gera uma chave secreta para 2FA
     
     try:
-        print(f"Generated 2FA secret: {secret}")
+        logger.debug(f"Generated 2FA secret: {secret}")
         
         db.users.insert_one({
             'username'   : username,
@@ -24,27 +27,29 @@ def create_user(db, username, email, password):
         return True, secret
     
     except Exception as e:
-        print(f"Error creating user: {e}")
+        logger.error(f"Error creating user: {e}")
         return False, None
 
 def authenticate_user(db, email, password, token_2fa=None):
+
+    logger.debug(f"Authenticate User: {email}")
     user = db.users.find_one({'email': email})
     
     if not user:
-        print(f"User not found for email: {email}")
+        logger.error(f"User not found for email: {email}")
         return None, 'User not found'
     
     if not check_password_hash(user['password'], password):
-        print(f"Invalid password attempt for email: {email}")
+        logger.error(f"Invalid password attempt for email: {email}")
         return None, 'Invalid password'
 
     if user.get('2fa_enabled', False):
         if not token_2fa:
-            print(f"2FA token not provided for email: {email}")
+            logger.error(f"2FA token not provided for email: {email}")
             return None, '2FA required'
         
         if not verify_2fa_token(user['2fa_secret'], token_2fa):
-            print(f"Invalid 2FA token for email: {email}")
+            logger.error(f"Invalid 2FA token for email: {email}")
             return None, 'Invalid 2FA token'
 
     access_token  = create_access_token(identity=user['email'])
