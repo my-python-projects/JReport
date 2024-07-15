@@ -2,7 +2,7 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, create_refresh_token
 from services.auth_service import create_user, authenticate_user, generate_qr_code, enable_2fa, is_2fa_enabled
 from services.rabbitmq import send_message
-from backend.log_config import setup_logging
+from log_config import setup_logging
 from utils.mongo import mongo
 
 logger = setup_logging()
@@ -17,10 +17,11 @@ def register_user():
         logger.debug(f"Registering user {username} with email: {email}")
 
         sucess, secret = create_user(db, username, email, password)
+        logger.debug(f"teste {sucess} secret: {secret}")
 
         if sucess:
             # Envia mensagem para a fila RabbitMQ
-            send_message('user_registered', {'username': username, 'email': email})
+            #send_message('user_registered', {'username': username, 'email': email})
 
             # Gera QR Code
             qr_code    = generate_qr_code(secret, email)

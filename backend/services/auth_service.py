@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask import current_app
 from io import BytesIO
-from backend.log_config import setup_logging
+from log_config import setup_logging
 
 logger = setup_logging()
 

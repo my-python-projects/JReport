@@ -3,7 +3,7 @@ from flask_cors import CORS
 from config import Config
 from utils.mongo import init_mongo
 from flask_jwt_extended import JWTManager
-from backend.log_config import setup_logging
+from log_config import setup_logging
 
 def create_app():
     app = Flask(__name__)
