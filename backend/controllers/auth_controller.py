@@ -17,7 +17,6 @@ def register_user():
         logger.debug(f"Registering user {username} with email: {email}")
 
         sucess, secret = create_user(db, username, email, password)
-        logger.debug(f"teste {sucess} secret: {secret}")
 
         if sucess:
             # Envia mensagem para a fila RabbitMQ
@@ -33,10 +32,11 @@ def register_user():
                 'email'  : email  # Retorna o email para a verificação do 2FA
             }), 200
         else:
+            logger.error('Registration failed')
             return jsonify({ 'success': False, 'message': 'Registration failed'}), 400
         
     except Exception as e:
-        logger.debug(f"Error in register_user: {e}")
+        logger.error(f"Error in register_user: {e}")
         return jsonify({ 'success': False, 'message': 'Internal server error' }), 500
 
 def login_user():
@@ -52,14 +52,16 @@ def login_user():
 
         if error:
             if error == '2FA required':
+                logger.error('2FA required')
                 return jsonify({ 'success': False, 'message': '2FA required', 'require_2fa': True }), 401
             else:
+                logger.error(f"[ERRO IN LOGIN]: {error}")
                 return jsonify({ 'success': False, 'message': error }), 401
         else:
             return jsonify(response), 200
         
     except Exception as e:
-        print(f"Error in login_user: {e}")
+        logger.error(f"Error in login_user: {e}")
         return jsonify({ 'success': False, 'message': 'Internal server error' }), 500
 
 def verify_2fa():
@@ -73,12 +75,14 @@ def verify_2fa():
         success, error = enable_2fa(db, email, token_2fa)
 
         if success:
+            logger.info('2FA enabled successfully')
             return jsonify({ 'success': True, 'message': '2FA enabled successfully' }), 200
         else:
+            logger.error(f"[ERRO IN VERIFY]: {error}")
             return jsonify({ 'success': False, 'message': error }), 400
 
     except Exception as e:
-        logger.debug(f"Error in verify_2fa: {e}")
+        logger.error(f"Error in verify_2fa: {e}")
         return jsonify({ 'success': False, 'message': 'Internal server error' }), 500
 
 from services.auth_service import is_2fa_enabled
@@ -99,13 +103,13 @@ def check_2fa():
             return jsonify({ 'success': True, 'enabled_2fa': is_enabled }), 200
 
     except Exception as e:
-        logger.debug(f"Error in check_2fa: {e}")
+        logger.error(f"Error in check_2fa: {e}")
         return jsonify({ 'success': False, 'message': 'Internal server error' }), 500
 
 
 @jwt_required(refresh=True)
 def refresh():
-    identity = get_jwt_identity()
+    identity     = get_jwt_identity()
     access_token = create_access_token(identity=identity)
     return jsonify(access_token=access_token), 200
 

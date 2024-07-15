@@ -58,25 +58,29 @@ def authenticate_user(db, email, password, token_2fa=None):
     return {'success': True, 'access_token': access_token, 'refresh_token': refresh_token, 'require_2fa': user.get('2fa_enabled', False)}, None
 
 def enable_2fa(db, email, token_2fa):
+    logger.info(f"Authenticate User: {email}")
     user = db.users.find_one({'email': email})
     
     if not user:
+        logger.error('User not found')
         return False, 'User not found'
     
     if verify_2fa_token(user['2fa_secret'], token_2fa):
         db.users.update_one({'email': email}, {'$set': {'2fa_enabled': True}})
         return True, None
     
+    logger.debug('Invalid 2FA token')
     return False, 'Invalid 2FA token'
 
 def verify_2fa_token(secret, token):
     totp = pyotp.TOTP(secret)
-    print(f"Verifying token: {token} with secret: {secret}")
+    logger.debug(f"Verifying token: {token} with secret: {secret}")
     return totp.verify(token, valid_window=1)
 
 def is_2fa_enabled(db, email):
     user = db.users.find_one({'email': email})
     if not user:
+        logger.error('User not found')
         return None, 'User not found'
     
     return user.get('2fa_enabled', False), None

@@ -10,3 +10,5 @@ app/logs
 # Ignore build output directories
 /dist
 /frontend/dist
+/.pytest_cache/
+/.pytest_cache/*

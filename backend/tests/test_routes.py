@@ -40,3 +40,15 @@ def test_login_route(client):
     
     assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
     logger.info("Login route test passed")
+
+
+def test_error_login_route(client):
+    logger.info("Testing error in login route")
+    
+    response = client.post('/api/login', json={
+        'email': 'newuser1@example.com',
+        'password': 'newpassword33@'
+    })
+    
+    assert response.status_code == 401, f"Expected status code 401 but got {response.status_code}"
+    logger.info("Erro in Login route test passed")
