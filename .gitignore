@@ -7,3 +7,6 @@ app/logs
 /frontend/package-lock.json
 /backend/.env
 /backend/logs/*
+# Ignore build output directories
+/dist
+/frontend/dist

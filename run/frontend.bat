@@ -11,6 +11,8 @@ cd /d "%diretorioVerificar%"
 
 cmd /c npm install
 
+cmd /c npm run build
+
 cmd /c npm run serve
 
 pause
