@@ -36,7 +36,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Run Tests
+      - name: Run Test
         working-directory: ./backend
         env:
           MONGO_URI: "mongodb://localhost:27017/jreport"
