@@ -10,10 +10,9 @@ from app import create_app
 
 @pytest.fixture
 def app():
-    app = create_app()
-    app.config.update({
+    app = create_app({
         "TESTING": True,
-        "MONGO_URI": 'mongodb://localhost:27017/jreport'
+        "MONGO_URI": os.getenv('MONGO_URI', "mongodb://localhost:27017/jprogram")
     })
     return app
 

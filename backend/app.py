@@ -5,9 +5,13 @@ from utils.mongo import init_mongo
 from flask_jwt_extended import JWTManager
 from log_config import setup_logging
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
-    app.config.from_object(Config)
+
+    if test_config:
+        app.config.update(test_config)
+    else:
+        app.config.from_object(Config)
 
     # Inicializa o MongoDB
     init_mongo(app)

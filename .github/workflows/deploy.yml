@@ -43,7 +43,7 @@ jobs:
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
-          source ../venv/bin/activate
+          source venv/bin/activate
           pytest --disable-warnings
 
   build-frontend:
@@ -66,6 +66,9 @@ jobs:
       - name: Build project
         working-directory: ./frontend
         run: npm run build
+
+      - name: List files
+        run: ls -la ./frontend/dist
 
   deploy-frontend:
     runs-on: ubuntu-latest
