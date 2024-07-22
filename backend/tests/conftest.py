@@ -12,7 +12,7 @@ from app import create_app
 def app():
     app = create_app({
         "TESTING": True,
-        "MONGO_URI": os.getenv('MONGO_URI', "mongodb://localhost:27017/jprogram")
+        "MONGO_URI": os.getenv('MONGO_URI', "mongodb://localhost:27017/jreport")
     })
     return app
 

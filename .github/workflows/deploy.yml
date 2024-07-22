@@ -39,7 +39,7 @@ jobs:
       - name: Run Tests
         working-directory: ./backend
         env:
-          MONGO_URI: "mongodb://localhost:27017/jprogram"
+          MONGO_URI: "mongodb://localhost:27017/jreport"
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
