@@ -30,6 +30,7 @@ jobs:
           python-version: '3.9'
 
       - name: Create and activate virtual environment
+        working-directory: ./backend
         run: |
           python -m venv venv
           source venv/bin/activate
