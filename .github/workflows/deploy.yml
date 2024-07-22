@@ -29,15 +29,20 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
-        working-directory: ./backend
+      - name: Create and activate virtual environment
         run: |
+          python -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          
+          pip install -r backend/requirements.txt
+
       - name: Run Tests
         working-directory: ./backend
-        run: pytest --disable-warnings
+        env:
+          MONGO_URI: "mongodb://localhost:27017/test_db"
+        run: |
+          source ../venv/bin/activate
+          pytest --disable-warnings
 
   build-frontend:
     name: Build Frontend
