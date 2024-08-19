@@ -68,26 +68,21 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist-files
-          path: ./frontend/dist
+      - name: List files
+        run: ls -la ./frontend/dist
 
   deploy-frontend:
     runs-on: ubuntu-latest
     needs: build-frontend
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
 
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: dist-files
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: develop
-          folder: dist
+          branch: gh-pages
+          folder: frontend/dist
           clean: true
