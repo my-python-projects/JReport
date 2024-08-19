@@ -8,7 +8,7 @@ app/logs
 /backend/.env
 /backend/logs/*
 # Ignore build output directories
-#/dist
-#/frontend/dist
+/dist
+/frontend/dist
 /.pytest_cache/
 /.pytest_cache/*
