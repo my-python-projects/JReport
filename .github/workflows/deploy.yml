@@ -68,8 +68,11 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: List files
-        run: ls -la ./frontend/dist
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-files
+          path: ./frontend/dist
 
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -77,12 +80,14 @@ jobs:
     if: github.ref == 'refs/heads/develop'
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-files
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: develop
-          folder: ./frontend/dist
+          folder: dist
           clean: true
